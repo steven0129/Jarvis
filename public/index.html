@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="zh-Hant">
+<html lang="en">
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -10,44 +10,44 @@
     <main class="container">
       <section class="hero">
         <p class="eyebrow">Jarvis</p>
-        <h1>OpenAI API 音訊路由測試頁</h1>
+        <h1>OpenAI API Audio Routing Test Page</h1>
         <p>
-          選擇模型後，Server 會檢查它是否支援音訊輸入。支援 multimodal/audio 的模型會直接收到音訊；不支援的模型會先用 Whisper 轉成文字再送出。
+          Choose a model and the server will check whether it supports audio input. Models with multimodal/audio support receive the audio directly; models without audio input support use Whisper transcription first.
         </p>
       </section>
 
       <section class="card">
-        <label for="model">OpenAI 模型</label>
+        <label for="model">OpenAI model</label>
         <div class="row">
-          <input id="model" name="model" placeholder="例如 gpt-4o-mini-audio-preview" />
-          <button id="checkModel" type="button">檢查模型能力</button>
+          <input id="model" name="model" placeholder="For example: gpt-4o-mini-audio-preview" />
+          <button id="checkModel" type="button">Check model capability</button>
         </div>
-        <p id="capability" class="status">尚未檢查</p>
+        <p id="capability" class="status">Not checked yet</p>
       </section>
 
       <section class="card">
-        <label for="prompt">給模型的提示詞</label>
-        <textarea id="prompt" rows="4">請用繁體中文回答這段音訊。</textarea>
+        <label for="prompt">Prompt for the model</label>
+        <textarea id="prompt" rows="4">Please answer this audio in English.</textarea>
 
         <div class="controls">
-          <button id="record" type="button">開始錄音</button>
-          <button id="stop" type="button" disabled>停止錄音</button>
-          <button id="send" type="button" disabled>送出音訊</button>
+          <button id="record" type="button">Start recording</button>
+          <button id="stop" type="button" disabled>Stop recording</button>
+          <button id="send" type="button" disabled>Send audio</button>
         </div>
 
         <audio id="playback" controls hidden></audio>
-        <p id="recordingState" class="status">尚未錄音</p>
+        <p id="recordingState" class="status">No recording yet</p>
       </section>
 
       <section class="card">
-        <h2>結果</h2>
+        <h2>Result</h2>
         <dl class="result-meta">
-          <div><dt>路由</dt><dd id="route">-</dd></div>
-          <div><dt>音訊支援</dt><dd id="supportsAudio">-</dd></div>
+          <div><dt>Route</dt><dd id="route">-</dd></div>
+          <div><dt>Audio support</dt><dd id="supportsAudio">-</dd></div>
         </dl>
-        <h3>Whisper 逐字稿</h3>
+        <h3>Whisper transcript</h3>
         <pre id="transcript">-</pre>
-        <h3>模型回覆</h3>
+        <h3>Model response</h3>
         <pre id="answer">-</pre>
       </section>
     </main>

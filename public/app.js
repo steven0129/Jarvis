@@ -73,21 +73,21 @@ async function loadConfig() {
 async function checkModel() {
   const model = modelInput.value.trim();
   if (!model) {
-    setStatus(capability, '請輸入模型名稱', 'error');
+    setStatus(capability, 'Enter a model name.', 'error');
     return null;
   }
-  setStatus(capability, '檢查中...');
+  setStatus(capability, 'Checking...');
   const response = await fetch(`/api/model/${encodeURIComponent(model)}/capability`);
   const data = await response.json();
   if (!response.ok) {
-    setStatus(capability, data.error || '模型能力檢查失敗', 'error');
+    setStatus(capability, data.error || 'Failed to check model capability.', 'error');
     return null;
   }
   setStatus(
     capability,
     data.supportsAudioInput
-      ? '這個模型支援音訊輸入：送出時會直接傳 WAV 音訊。'
-      : '這個模型未偵測到音訊輸入能力：送出時會先用 Whisper 轉文字。',
+      ? 'This model supports audio input: WAV audio will be sent directly.'
+      : 'Audio input support was not detected for this model: Whisper will transcribe it first.',
     data.supportsAudioInput ? 'ok' : 'warn',
   );
   return data;
@@ -113,7 +113,7 @@ async function startRecording() {
   stopButton.disabled = false;
   sendButton.disabled = true;
   playback.hidden = true;
-  setStatus(recordingState, '錄音中...');
+  setStatus(recordingState, 'Recording...');
 }
 
 async function stopRecording() {
@@ -129,7 +129,7 @@ async function stopRecording() {
   sendButton.disabled = false;
   recordButton.disabled = false;
   stopButton.disabled = true;
-  setStatus(recordingState, `錄音完成：${Math.round(recordedBlob.size / 1024)} KB WAV`, 'ok');
+  setStatus(recordingState, `Recording complete: ${Math.round(recordedBlob.size / 1024)} KB WAV`, 'ok');
 
   audioContext = null;
   source = null;
@@ -140,7 +140,7 @@ async function stopRecording() {
 async function sendAudio() {
   if (!recordedBlob) return;
   sendButton.disabled = true;
-  answer.textContent = '處理中...';
+  answer.textContent = 'Processing...';
   transcript.textContent = '-';
   route.textContent = '-';
   supportsAudio.textContent = '-';
@@ -155,14 +155,14 @@ async function sendAudio() {
   sendButton.disabled = false;
 
   if (!response.ok) {
-    answer.textContent = data.error || '送出失敗';
+    answer.textContent = data.error || 'Failed to send audio.';
     return;
   }
 
   route.textContent = data.route;
-  supportsAudio.textContent = data.supportsAudioInput ? '是' : '否';
+  supportsAudio.textContent = data.supportsAudioInput ? 'Yes' : 'No';
   transcript.textContent = data.transcript || '-';
-  answer.textContent = data.answer || '(空白回覆)';
+  answer.textContent = data.answer || '(empty response)';
 }
 
 checkModelButton.addEventListener('click', checkModel);

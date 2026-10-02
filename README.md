@@ -1,36 +1,36 @@
 # Jarvis OpenAI Audio Server
 
-這是一個以 OpenAI API 為 backend 的小型 Web Server。啟動後會提供一個網頁，讓你選擇模型、錄音、檢查目前模型是否支援音訊輸入，並自動選擇路由：
+Jarvis is a small OpenAI API-backed web server. When it starts, it serves a browser UI where you can choose a model, record audio, check whether the selected model supports audio input, and automatically route the request:
 
-- 支援 multimodal/audio input：直接把音訊送給模型。
-- 不支援音訊輸入：先用 Whisper 轉成文字，再把逐字稿送給後面的模型。
+- Models with multimodal/audio input support receive the audio directly.
+- Models without audio input support use Whisper first, then receive the transcript as text.
 
-## 安裝
+## Installation
 
 ```bash
 npm install
 cp .env.example .env
 ```
 
-編輯 `.env`：
+Edit `.env`:
 
 ```bash
-OPENAI_API_KEY=你的 OpenAI API Key
+OPENAI_API_KEY=your OpenAI API key
 OPENAI_MODEL=gpt-4o-mini
 WHISPER_MODEL=whisper-1
 ```
 
-如果你使用相容 OpenAI API 的 gateway，也可以設定 `OPENAI_BASE_URL`。
+If you use an OpenAI-compatible gateway, you can also set `OPENAI_BASE_URL`.
 
-## 啟動
+## Start the server
 
 ```bash
 npm start
 ```
 
-打開 http://localhost:3000 。
+Open http://localhost:3000.
 
-## 測試
+## Test
 
 ```bash
 npm test
@@ -40,7 +40,7 @@ npm test
 
 ### `GET /api/model/:modelId/capability`
 
-回傳 server 判斷的模型音訊輸入能力：
+Returns the server's detected audio input capability for the model:
 
 ```json
 {
@@ -49,17 +49,17 @@ npm test
 }
 ```
 
-Server 會優先使用 OpenAI Models API 的 metadata；如果 provider 沒有提供明確 metadata，會用保守的模型名稱規則 fallback。
+The server prefers metadata from the OpenAI Models API. If the provider does not expose explicit metadata, the server falls back to conservative model-name rules.
 
 ### `POST /api/audio-chat`
 
-`multipart/form-data`：
+`multipart/form-data` fields:
 
-- `audio`: 音訊檔
-- `model`: 目標模型
-- `prompt`: 給模型的提示詞
+- `audio`: audio file
+- `model`: target model
+- `prompt`: prompt for the model
 
-回傳：
+Response:
 
 ```json
 {
