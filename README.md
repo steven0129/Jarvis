@@ -36,6 +36,32 @@ Open http://localhost:3000.
 npm test
 ```
 
+## Docker
+
+Build the image:
+
+```bash
+docker build -t jarvis-openai-audio-server .
+```
+
+Run the container:
+
+```bash
+docker run --rm -p 3000:3000 --env-file .env jarvis-openai-audio-server
+```
+
+Open http://localhost:3000.
+
+If you do not want to use an env file, pass the required variables directly:
+
+```bash
+docker run --rm -p 3000:3000 \
+  -e OPENAI_API_KEY=your_openai_api_key \
+  -e OPENAI_MODEL=gpt-4o-mini \
+  -e WHISPER_MODEL=whisper-1 \
+  jarvis-openai-audio-server
+```
+
 ## API
 
 ### `GET /api/model/:modelId/capability`
