@@ -1,0 +1,57 @@
+<!doctype html>
+<html lang="zh-Hant">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Jarvis OpenAI Audio Server</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <main class="container">
+      <section class="hero">
+        <p class="eyebrow">Jarvis</p>
+        <h1>OpenAI API 音訊路由測試頁</h1>
+        <p>
+          選擇模型後，Server 會檢查它是否支援音訊輸入。支援 multimodal/audio 的模型會直接收到音訊；不支援的模型會先用 Whisper 轉成文字再送出。
+        </p>
+      </section>
+
+      <section class="card">
+        <label for="model">OpenAI 模型</label>
+        <div class="row">
+          <input id="model" name="model" placeholder="例如 gpt-4o-mini-audio-preview" />
+          <button id="checkModel" type="button">檢查模型能力</button>
+        </div>
+        <p id="capability" class="status">尚未檢查</p>
+      </section>
+
+      <section class="card">
+        <label for="prompt">給模型的提示詞</label>
+        <textarea id="prompt" rows="4">請用繁體中文回答這段音訊。</textarea>
+
+        <div class="controls">
+          <button id="record" type="button">開始錄音</button>
+          <button id="stop" type="button" disabled>停止錄音</button>
+          <button id="send" type="button" disabled>送出音訊</button>
+        </div>
+
+        <audio id="playback" controls hidden></audio>
+        <p id="recordingState" class="status">尚未錄音</p>
+      </section>
+
+      <section class="card">
+        <h2>結果</h2>
+        <dl class="result-meta">
+          <div><dt>路由</dt><dd id="route">-</dd></div>
+          <div><dt>音訊支援</dt><dd id="supportsAudio">-</dd></div>
+        </dl>
+        <h3>Whisper 逐字稿</h3>
+        <pre id="transcript">-</pre>
+        <h3>模型回覆</h3>
+        <pre id="answer">-</pre>
+      </section>
+    </main>
+
+    <script src="/app.js" type="module"></script>
+  </body>
+</html>

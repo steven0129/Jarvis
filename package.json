@@ -1,0 +1,19 @@
+{
+  "name": "jarvis-openai-audio-server",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "OpenAI API backed web server that routes microphone audio directly to multimodal models or through Whisper transcription for text-only models.",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "test": "node --test"
+  },
+  "dependencies": {
+    "@fastify/multipart": "^9.0.3",
+    "@fastify/static": "^10.1.5",
+    "dotenv": "^16.4.7",
+    "fastify": "^5.2.1",
+    "openai": "^4.77.0"
+  }
+}
